@@ -1,45 +1,56 @@
+const cardsContainer = document.querySelector('.cards-container');
+const productDetailContainer = document.querySelector('#productDetail');
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
 // desktop menu
-    const menuEmail = document.querySelector('.navbar-email');
-    const menuDesktop = document.querySelector('.desktop-menu');
+const menuEmail = document.querySelector('.navbar-email');
+const menuDesktop = document.querySelector('.desktop-menu');
 
-    menuEmail.addEventListener('click', toggleDesktopMenu);
+menuEmail.addEventListener('click', toggleDesktopMenu);
 
-    function toggleDesktopMenu() {
-        menuDesktop.classList.toggle('inactive');
-        if(shoppingCartContainer.classList.contains('inactive')==false){
-            shoppingCartContainer.classList.toggle('inactive');
-        }
-    }
-// mobile menu
-    const btnMenu = document.querySelector('.menu');
-    const menuMobile = document.querySelector('.mobile-menu');
-
-    btnMenu.addEventListener('click', toggleMobileMenu);
-
-    function toggleMobileMenu() {
-        menuMobile.classList.toggle('inactive');
+function toggleDesktopMenu() {
+    menuDesktop.classList.toggle('inactive');
     if (shoppingCartContainer.classList.contains('inactive') == false) {
         shoppingCartContainer.classList.toggle('inactive');
     }
+    if (productDetailContainer.classList.contains('inactive') == false) {
+        productDetailContainer.classList.add('inactive');
+    }
+}
+// mobile menu
+const btnMenu = document.querySelector('.menu');
+const menuMobile = document.querySelector('.mobile-menu');
+
+btnMenu.addEventListener('click', toggleMobileMenu);
+
+function toggleMobileMenu() {
+    menuMobile.classList.toggle('inactive');
+    if (shoppingCartContainer.classList.contains('inactive') == false) {
+        shoppingCartContainer.classList.toggle('inactive');
+    }
+    if (productDetailContainer.classList.contains('inactive') == false) {
+        productDetailContainer.classList.add('inactive');
+    }
 }
 // shopping cart
-    const btnCartIcon = document.querySelector('.navbar-shopping-cart');
-    const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
+const btnCartIcon = document.querySelector('.navbar-shopping-cart');
+const shoppingCartContainer = document.querySelector('#shoppingCartContainer');
 
-    btnCartIcon.addEventListener('click', toggleshoppingCartContainer);
+btnCartIcon.addEventListener('click', toggleshoppingCartContainer);
 
-    function toggleshoppingCartContainer() {
-        shoppingCartContainer.classList.toggle('inactive');
+function toggleshoppingCartContainer() {
+    shoppingCartContainer.classList.toggle('inactive');
     if (menuMobile.classList.contains('inactive') == false) {
         menuMobile.classList.toggle('inactive');
     }
-    if(menuDesktop.classList.contains('inactive')==false){
+    if (menuDesktop.classList.contains('inactive') == false) {
         menuDesktop.classList.toggle('inactive');
     }
+    if (productDetailContainer.classList.contains('inactive') == false) {
+        productDetailContainer.classList.add('inactive');
     }
-
+}
 const productList = [];
-const addProduct = (product) =>{
+const addProduct = (product) => {
     productList.push({
         name: product.name,
         price: product.price,
@@ -98,8 +109,13 @@ addProduct({
     price: 290,
     image: 'https://images.pexels.com/photos/6324131/pexels-photo-6324131.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
 });
+addProduct({
+    name: 'Christmas tree decorations',
+    price: 30,
+    image: 'https://images.pexels.com/photos/250177/pexels-photo-250177.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+});
 
-
+productList.sort(function () { return Math.random() - 0.5 });
 {/* <div class="product-card">
         <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
         <div class="product-info">
@@ -112,42 +128,67 @@ addProduct({
           </figure>
         </div>
 </div> */}
+productDetailCloseIcon.addEventListener('click', closeProductDetailAside);
+function closeProductDetailAside() {
+    productDetailContainer.classList.add('inactive');
+}
+// Si el usuario hace scroll de 60 px hacia abajo, se cambia la clase de un contendor
+window.onscroll = function () { scrollFunction() };
+function scrollFunction() {
+    if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
+        document.querySelector("#productDetail").classList.add('aside-scroll');
+    } else {
+        document.querySelector("#productDetail").classList.remove('aside-scroll');
+    }
+}
 
-const cardsContainer = document.querySelector('.cards-container');
-
-function renderProducts(arr){
-    for (product of productList){
+function renderProducts(arr) {
+    for (product of productList) {
         // product cart
         const productCart = document.createElement('div');
         productCart.classList.add('product-card');
-    
+
         cardsContainer.append(productCart);
         // img
         const img = document.createElement('img');
         img.setAttribute('src', product.image);
-    
+        img.addEventListener('click', openProductDetailAside);
+
+        function openProductDetailAside() {
+            productDetailContainer.classList.remove('inactive');
+            if (shoppingCartContainer.classList.contains('inactive') == false) {
+                shoppingCartContainer.classList.toggle('inactive');
+            }
+            if (menuDesktop.classList.contains('inactive') == false) {
+                menuDesktop.classList.toggle('inactive');
+            }
+            if (menuMobile.classList.contains('inactive') == false) {
+                menuMobile.classList.toggle('inactive');
+            }
+        }
+
         productCart.append(img);
         // product info
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
-        
+
         productCart.append(productInfo);
-    
+
         // product info div
         const productInfoDiv = document.createElement('div');
         productInfo.append(productInfoDiv);
-    
+
         const productPrice = document.createElement('p');
         const productName = document.createElement('p');
-        
+
         productInfoDiv.append(productPrice, productName);
-    
-        const priceText = document.createTextNode('$'+ product.price +',00');
+
+        const priceText = document.createTextNode('$' + product.price + ',00');
         const nameText = document.createTextNode(product.name);
         productPrice.append(priceText);
         productName.append(nameText);
-    
-    
+
+
         const productInfoFigure = document.createElement('figure');
         productInfo.append(productInfoFigure);
         const productImgCart = document.createElement('img');
@@ -157,4 +198,4 @@ function renderProducts(arr){
 }
 renderProducts(productList);
 
-    
+

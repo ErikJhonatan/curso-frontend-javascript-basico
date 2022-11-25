@@ -8,16 +8,24 @@
     --md: 16px;
     --lg: 18px;
   }
-  body {
+  * {
+    box-sizing: border-box;
+    padding: 0;
     margin: 0;
+  }
+  body {
     font-family: 'Quicksand', sans-serif;
+    background-color: var(--white);
+    height: auto;
   }
 
  .inactive {
     display: none;
   }
-
   nav {
+    background-color: var(--white);
+    width: 100%;
+    position: fixed;
     display: flex;
     justify-content: space-between;
     padding: 0 24px;
@@ -93,7 +101,7 @@ Menu desktop
     background: var(--white);
     top: 60px;
     right: 60px;
-    width: 100px;
+    width: 133px;
     height: auto;
     border: 1px solid var(--very-light-pink);
     border-radius: 6px;
@@ -120,6 +128,7 @@ Menu desktop
     font-size: var(--sm);
   }
   .desktop-menu ul li a {
+    font-size: 16px;
     color: var(--back);
     text-decoration: none;
     margin-bottom: 20px;
@@ -167,10 +176,14 @@ Menu desktop
   aside {
     background-color: var(--white);
     width: 360px;
-
     box-sizing: border-box;
     position: absolute;
+    top: 60px;
     right: 0;
+  }
+  .aside-scroll {
+    top: 0px;
+    position: fixed;
   }
 
   /*
@@ -179,8 +192,14 @@ Menu desktop
   #shoppingCartContainer {
     padding: 0px 24px;
     padding-bottom: 24px;
+    top: 60;
+    position: fixed;
   }
-
+  .my-order-content{
+    height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
 
   .title-container {
     display: flex;
@@ -252,6 +271,7 @@ Menu desktop
     font-weight: bold;
     height: 50px;
   }
+
   /*
   Product list
   */
@@ -261,7 +281,7 @@ Menu desktop
     grid-template-columns: repeat(auto-fill, 240px);
     gap: 26px;
     place-content: center;
-    margin-top: 20px;
+    padding-top: 80px;
   }
   .product-card {
     width: 240px;
@@ -271,6 +291,7 @@ Menu desktop
     height: 240px;
     border-radius: 20px;
     object-fit: cover;
+    cursor: pointer;
   }
   .product-card .product-info {
     display: flex;
@@ -303,13 +324,14 @@ Menu desktop
   */
   .product-detail-close {
     background: var(--white);
-    width: 14px;
-    height: 14px;
+    width: 36px;
+    height: 36px;
     position: absolute;
     top: 24px;
     left: 24px;
     z-index: 2;
-    padding: 12px;
+    padding-left: 11px;
+    padding-top: 10px;
     border-radius: 50%;
   }
   .product-detail-close:hover {
@@ -391,9 +413,46 @@ Menu desktop
         width: 140px;
         height: 140px;
     }
+    #productDetail > img:nth-child(2) {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 0 0 20px 20px;
+    }
   }
+
   @media (min-width: 641px) {
     .mobile-menu {
       display: none;
     }
+      /*
+  overflow
+  */
+    .my-order-content::-webkit-scrollbar {
+      -webkit-appearance: none;
+  }
+
+  .my-order-content::-webkit-scrollbar:vertical {
+      width: 10px;
+  }
+
+  .my-order-content::-webkit-scrollbar-button:increment,.my-order-content::-webkit-scrollbar-button {
+      display: none;
+  } 
+
+  .my-order-content::-webkit-scrollbar:horizontal {
+      height: 10px;
+  }
+  .my-order-content::-webkit-scrollbar-thumb{
+      background: none;
+  }
+
+  .my-order-content::-webkit-scrollbar-thumb {
+      background-color: var(--very-light-pink);
+      border-radius: 20px;
+  }
+
+  .my-order-content::-webkit-scrollbar-track {
+      border-radius: 10px;  
+  }
   }
